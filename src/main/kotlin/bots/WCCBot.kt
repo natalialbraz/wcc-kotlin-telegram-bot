@@ -14,12 +14,12 @@ class WCCBot : TelegramLongPollingBot() {
     override fun getBotUsername(): String {
         //return bot username
         // If bot username is @HelloKotlinBot, it must return
-        return "HelloKotlinBot"
+        return "WccNaluBot"
     }
 
     override fun getBotToken(): String {
         // Return bot token from BotFather
-        return "[TOKEN-TELEGRAM]"
+        return "2128890496:AAE8YOgJka7JVD6B-smynkff2refvuFaHcc"
     }
 
     override fun onUpdateReceived(update: Update?) {
@@ -32,8 +32,8 @@ class WCCBot : TelegramLongPollingBot() {
             if(messageCommand=="/start") {
                 val sendDocument = SendDocument().apply {
                     this.chatId = chatId
-                    this.caption = EmojiParser.parseToUnicode("Oláaa $nameSender :smile:")
-                    this.document = InputFile().setMedia("https://media.giphy.com/media/SKGo6OYe24EBG/giphy.gif")
+                    this.caption = getMessage(messageCommand, nameSender)
+                    this.document = InputFile().setMedia("https://media2.giphy.com/media/4oMoIbIQrvCjm/giphy.gif?cid=ecf05e47m6e3bdkc5i1fvd66l5jn268wyy3gzt77d8jnkc52&rid=giphy.gif&ct=g")
                     this.parseMode = "MarkdownV2"
                 }
 
@@ -41,7 +41,7 @@ class WCCBot : TelegramLongPollingBot() {
             } else {
                 val sendDocument = SendMessage().apply {
                     this.chatId = chatId
-                    this.text = EmojiParser.parseToUnicode("num funfou :(")
+                    this.text = EmojiParser.parseToUnicode("Escolha não reconhecida :weary:")
                     this.parseMode = "MarkdownV2"
                 }
 
@@ -51,5 +51,18 @@ class WCCBot : TelegramLongPollingBot() {
             e.printStackTrace()
         }
     }
+    private fun getMessage(command:String?, nameSender: String?) = when(command){
+        "/info" -> EmojiParser.parseToUnicode("Não há informação :disappointed:")
+        "/start" -> welcome(nameSender)
+        else -> EmojiParser.parseToUnicode("não sei :weary:")
+    }
+    private fun welcome(nameSender: String?) = EmojiParser.parseToUnicode("""
+        :us: *Welcome to EnglishFun, $nameSender * :us: 
+        
+        :rocket:Escolha uma das opções abaixo para iniciar seu processo de aprendizagem: 
+        \/motivation
+        \/sons   
+        \/dictionary
+    """.trimIndent())
 }
 
